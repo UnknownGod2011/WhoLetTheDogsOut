@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Mic, MicOff, Volume2, VolumeX, Skull } from 'lucide-react';
 import { voicePipeline, type PipelineStatus, type VoiceQuestion } from '@/services/voicePipeline';
-import { testGeminiConnection } from '@/services/gemini';
-import { testElevenLabsConnection } from '@/services/elevenlabs';
 import WebGLOrb from './WebGLOrb';
 import type { MurderCase } from '@/data/cases';
 
@@ -25,7 +23,6 @@ export function InteractiveOrb({
   size = 'large' 
 }: InteractiveOrbProps) {
   const [status, setStatus] = useState<PipelineStatus>(voicePipeline.getStatus());
-  const [showDebug, setShowDebug] = useState(false);
   const [storyStarted, setStoryStarted] = useState(false);
   const [showSkipDialog, setShowSkipDialog] = useState(false);
 
@@ -98,36 +95,6 @@ export function InteractiveOrb({
 
   const handleCancelSkip = () => {
     setShowSkipDialog(false);
-  };
-
-  const handleTestGemini = async () => {
-    console.log('[Debug] Testing Gemini connection...');
-    const result = await testGeminiConnection();
-    if (result.success) {
-      console.log('[Debug] ✅ Gemini test successful!', result.response);
-      alert('✅ Gemini API is working! Check console for details.');
-    } else {
-      console.error('[Debug] ❌ Gemini test failed:', result.error);
-      alert(`❌ Gemini API failed: ${result.error}`);
-    }
-  };
-
-  const handleTestElevenLabs = async () => {
-    console.log('[Debug] Testing ElevenLabs API connection...');
-    try {
-      const result = await testElevenLabsConnection();
-      
-      if (result.success) {
-        console.log('[Debug] ✅ ElevenLabs test successful!', result);
-        alert(`✅ ElevenLabs is working! Found ${result.voices?.length || 0} voices available.`);
-      } else {
-        console.error('[Debug] ❌ ElevenLabs test failed:', result.error);
-        alert(`❌ ElevenLabs failed: ${result.error}`);
-      }
-    } catch (error) {
-      console.error('[Debug] ❌ ElevenLabs test failed:', error);
-      alert(`❌ ElevenLabs failed: ${error.message}`);
-    }
   };
 
   const getOrbSize = () => {
@@ -295,55 +262,6 @@ export function InteractiveOrb({
             <Skull className="w-4 h-4" />
             {status.questionsRemaining < 3 ? 'Ready to Accuse?' : 'Skip to Accusation'}
           </Button>
-        </div>
-      )}
-
-      {/* Debug Panel (Development) */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="mt-4">
-          <Button
-            onClick={() => setShowDebug(!showDebug)}
-            variant="ghost"
-            size="sm"
-            className="text-xs mr-2"
-          >
-            {showDebug ? 'Hide' : 'Show'} Debug
-          </Button>
-          
-          <Button
-            onClick={handleTestGemini}
-            variant="ghost"
-            size="sm"
-            className="text-xs mr-2"
-          >
-            Test Gemini API
-          </Button>
-          
-          <Button
-            onClick={handleTestElevenLabs}
-            variant="ghost"
-            size="sm"
-            className="text-xs"
-          >
-            Test ElevenLabs
-          </Button>
-          
-          {showDebug && (
-            <div className="mt-2 p-3 bg-black/50 rounded-lg text-xs font-mono max-w-md">
-              <div className="mb-2">
-                <strong>State:</strong> {status.state}<br />
-                <strong>Questions:</strong> {status.questionsRemaining}/3<br />
-                <strong>Listening:</strong> {status.isListening ? 'Yes' : 'No'}<br />
-                <strong>Speaking:</strong> {status.isSpeaking ? 'Yes' : 'No'}
-              </div>
-              
-              <div className="max-h-32 overflow-y-auto space-y-1">
-                {status.debugLog.map((log, i) => (
-                  <div key={i} className="text-green-400">{log}</div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
 
