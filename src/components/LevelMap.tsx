@@ -10,18 +10,22 @@ interface LevelMapProps {
 }
 
 export function LevelMap({ unlockedLevels, completedLevels, onSelectLevel }: LevelMapProps) {
-  const levels = MURDER_CASES.map(c => ({
+  const mysteryLevels = MURDER_CASES.map(c => ({
     level: c.level,
     title: c.title,
     subtitle: c.subtitle,
+    type: 'mystery' as const
   }));
 
-  // Add placeholder locked levels
+  // Add the debate level as the 4th and final level
   const allLevels = [
-    ...levels,
-    { level: 3, title: 'The Crimson Chapel', subtitle: 'Faith turned to fury' },
-    { level: 4, title: 'Shadows of the Stage', subtitle: 'The final act awaits' },
-    { level: 5, title: 'The Collector\'s End', subtitle: 'Some treasures cost everything' },
+    ...mysteryLevels,
+    { 
+      level: 4, 
+      title: 'DEBATE THE ORACLE', 
+      subtitle: 'The ultimate intellectual challenge',
+      type: 'debate' as const
+    }
   ];
 
   return (
@@ -101,9 +105,13 @@ export function LevelMap({ unlockedLevels, completedLevels, onSelectLevel }: Lev
                     style={{
                       background: isCompleted
                         ? 'radial-gradient(circle, hsl(43 80% 55% / 0.4) 0%, transparent 70%)'
+                        : level.type === 'debate'
+                        ? 'radial-gradient(circle, hsl(280 80% 55% / 0.4) 0%, transparent 70%)'
                         : 'radial-gradient(circle, hsl(0 70% 32% / 0.4) 0%, transparent 70%)',
                       boxShadow: isCompleted
                         ? '0 0 40px hsl(43 80% 55% / 0.3)'
+                        : level.type === 'debate'
+                        ? '0 0 40px hsl(280 80% 55% / 0.3)'
                         : '0 0 40px hsl(0 70% 32% / 0.3)',
                     }}
                     animate={{
@@ -118,6 +126,29 @@ export function LevelMap({ unlockedLevels, completedLevels, onSelectLevel }: Lev
                   />
                 )}
 
+                {/* Three crowns for debate level */}
+                {level.type === 'debate' && isUnlocked && (
+                  <div className="absolute -top-8 flex space-x-1">
+                    {[0, 1, 2].map((i) => (
+                      <motion.div
+                        key={i}
+                        className="text-yellow-400"
+                        animate={{
+                          y: [0, -2, 0],
+                          rotate: [0, 5, 0],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                        }}
+                      >
+                        👑
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
                 {/* Node circle */}
                 <div
                   className={`
@@ -127,14 +158,20 @@ export function LevelMap({ unlockedLevels, completedLevels, onSelectLevel }: Lev
                     ${isUnlocked
                       ? isCompleted
                         ? 'border-accent bg-accent/20'
+                        : level.type === 'debate'
+                        ? 'border-purple-500 bg-purple-500/20 group-hover:bg-purple-500/30'
                         : 'border-primary bg-primary/20 group-hover:bg-primary/30'
                       : 'border-muted/30 bg-muted/10'}
                   `}
                 >
                   {isUnlocked ? (
-                    <span className={`font-cinzel text-2xl ${isCompleted ? 'text-accent' : 'text-primary-foreground'}`}>
-                      {level.level}
-                    </span>
+                    level.type === 'debate' ? (
+                      <span className="text-2xl">🧠</span>
+                    ) : (
+                      <span className={`font-cinzel text-2xl ${isCompleted ? 'text-accent' : 'text-primary-foreground'}`}>
+                        {level.level}
+                      </span>
+                    )
                   ) : (
                     <Lock className="w-6 h-6 text-muted-foreground/50" />
                   )}

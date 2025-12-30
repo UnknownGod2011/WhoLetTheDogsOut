@@ -1,73 +1,197 @@
-# Welcome to your Lovable project
+# 🔮 The Whispering Orb - Voice-Driven Murder Mystery
 
-## Project info
+> **Hackathon Project**: ElevenLabs Challenge - Google Cloud AI Hackathon 2024
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+An immersive, voice-driven murder mystery game where players interact entirely through speech with a mystical AI-powered orb to solve complex cases.
 
-## How can I edit this code?
+## 🎯 Hackathon Challenge: ElevenLabs + Google Cloud AI
 
-There are several ways of editing your application.
+This project demonstrates the power of combining **ElevenLabs' conversational AI** with **Google Cloud's Vertex AI/Gemini** to create a fully voice-driven gaming experience. Players can:
 
-**Use Lovable**
+- 🎤 **Ask questions by voice** - Natural speech recognition
+- 🔮 **Receive AI-generated responses** - Contextual, cryptic answers from the mystical orb
+- 🗣️ **Hear responses spoken aloud** - ElevenLabs text-to-speech with custom voices
+- 🧠 **Experience dynamic storytelling** - Gemini AI generates contextual responses
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🚀 Live Demo
 
-Changes made via Lovable will be committed automatically to this repo.
+**Deployed URL**: [Coming Soon - Google Cloud App Engine]
 
-**Use your preferred IDE**
+**Demo Video**: [3-minute demo video on YouTube]
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Technology Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Core Technologies
+- **React 18** + **TypeScript** - Modern web framework
+- **Vite** - Fast development and building
+- **Tailwind CSS** + **shadcn/ui** - Beautiful, responsive design
+- **Framer Motion** - Smooth animations and transitions
 
-Follow these steps:
+### AI & Voice Integration
+- **ElevenLabs API** - High-quality text-to-speech and voice synthesis
+- **Google Gemini AI** - Dynamic response generation and case analysis
+- **Web Speech API** - Browser-native speech recognition
+- **Web Audio API** - Audio playback and processing
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Cloud Infrastructure
+- **Google Cloud App Engine** - Scalable hosting
+- **Google Cloud Build** - CI/CD pipeline
+- **Vertex AI** - Advanced AI capabilities (planned)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🎮 Game Features
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Voice-First Experience
+- **Natural Conversation**: Speak questions naturally to the mystical orb
+- **Intelligent Responses**: AI-generated cryptic clues that maintain game balance
+- **Atmospheric Audio**: Custom voice synthesis for the orb's mystical personality
+- **Seamless Switching**: Toggle between voice and text input modes
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Murder Mystery Gameplay
+- **Progressive Cases**: Multiple difficulty levels with increasing complexity
+- **Limited Questions**: Strategic gameplay with only 3 questions per case
+- **Logical Deduction**: Fair, solvable mysteries with consistent clues
+- **Dynamic Storytelling**: AI adapts responses based on previous questions
+
+### Technical Innovation
+- **Real-time Voice Processing**: Low-latency speech recognition and synthesis
+- **Context-Aware AI**: Gemini maintains case consistency and narrative flow
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Offline Fallback**: Graceful degradation when APIs are unavailable
+
+## 🔧 Setup Instructions
+
+### Prerequisites
+- **Node.js 18+** and **npm**
+- **ElevenLabs API Key** ([Get one here](https://elevenlabs.io/))
+- **Google Gemini API Key** ([Get one here](https://makersuite.google.com/))
+- **Google Cloud Account** (for deployment)
+
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/UnknownGod2011/the-whispering-orb.git
+   cd the-whispering-orb
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit `.env` and add your API keys:
+   ```env
+   VITE_ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+   VITE_GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in browser**
+   Navigate to `http://localhost:5173`
+
+### Google Cloud Deployment
+
+1. **Install Google Cloud CLI**
+   ```bash
+   # Follow instructions at: https://cloud.google.com/sdk/docs/install
+   ```
+
+2. **Initialize and authenticate**
+   ```bash
+   gcloud init
+   gcloud auth login
+   ```
+
+3. **Set up project**
+   ```bash
+   gcloud config set project YOUR_PROJECT_ID
+   gcloud app create --region=us-central
+   ```
+
+4. **Deploy application**
+   ```bash
+   npm run build
+   gcloud app deploy
+   ```
+
+## 🎯 Hackathon Requirements Fulfilled
+
+### ✅ ElevenLabs Integration
+- **Voice Synthesis**: Custom orb voice with atmospheric personality
+- **Real-time Audio**: Streaming audio responses for immersive experience
+- **Voice Recognition**: Natural speech input for questions
+- **React SDK**: Integrated using ElevenLabs React components
+
+### ✅ Google Cloud AI Integration
+- **Gemini AI**: Dynamic response generation maintaining game logic
+- **Contextual Understanding**: AI maintains case consistency across questions
+- **Cloud Deployment**: Hosted on Google Cloud App Engine
+- **Scalable Architecture**: Built for cloud-native scaling
+
+### ✅ Innovation & User Experience
+- **Voice-First Design**: Entirely conversational gameplay option
+- **Atmospheric Immersion**: AI-powered mystical orb personality
+- **Progressive Difficulty**: Multiple cases with increasing complexity
+- **Cross-Platform**: Works on desktop, mobile, and tablets
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   React App     │    │   ElevenLabs     │    │  Google Cloud   │
+│                 │    │                  │    │                 │
+│ ┌─────────────┐ │    │ ┌──────────────┐ │    │ ┌─────────────┐ │
+│ │Voice Manager│ │◄──►│ │Text-to-Speech│ │    │ │  Gemini AI  │ │
+│ └─────────────┘ │    │ └──────────────┘ │    │ └─────────────┘ │
+│                 │    │                  │    │                 │
+│ ┌─────────────┐ │    │ ┌──────────────┐ │    │ ┌─────────────┐ │
+│ │Speech Recog │ │    │ │Voice Cloning │ │    │ │ App Engine  │ │
+│ └─────────────┘ │    │ └──────────────┘ │    │ └─────────────┘ │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
-**Edit a file directly in GitHub**
+## 🎨 Game Design Philosophy
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Mystical Atmosphere
+- **Visual Design**: Dark, atmospheric UI with glowing orb animations
+- **Audio Design**: Ethereal voice synthesis with mystical personality
+- **Narrative Style**: Cryptic, poetic responses that maintain immersion
 
-**Use GitHub Codespaces**
+### Fair Mystery Design
+- **Logical Consistency**: All cases have clear, deducible solutions
+- **Balanced Clues**: Information is distributed fairly across questions
+- **Progressive Difficulty**: Cases increase in complexity and red herrings
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Accessibility
+- **Multiple Input Methods**: Voice and text input options
+- **Visual Feedback**: Clear indicators for voice recognition status
+- **Responsive Design**: Works across all device sizes
 
-## What technologies are used for this project?
+## 🏆 Future Enhancements
 
-This project is built with:
+- **Dynamic Case Generation**: AI-generated cases with infinite variety
+- **Multiplayer Mode**: Collaborative solving with voice chat
+- **Advanced Voice Features**: Emotion detection and response adaptation
+- **VR Integration**: Immersive 3D environments with spatial audio
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📝 License
 
-## How can I deploy this project?
+This project is open source under the MIT License. See [LICENSE](LICENSE) for details.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 🤝 Contributing
 
-## Can I connect a custom domain to my Lovable project?
+Contributions are welcome! Please read our contributing guidelines and submit pull requests for any improvements.
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Built for the Google Cloud AI Hackathon 2024** 🚀  
+*Pushing the boundaries of voice-driven gaming with AI*
