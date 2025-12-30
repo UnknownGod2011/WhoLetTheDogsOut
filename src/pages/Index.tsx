@@ -6,6 +6,7 @@ import { FogOverlay } from '@/components/FogOverlay';
 import { SuspectSelection } from '@/components/SuspectSelection';
 import { DebateMode } from '@/components/DebateMode';
 import { DebateCongratulation } from '@/components/DebateCongratulation';
+import SplashCursor from '@/components/SplashCursor';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -359,6 +360,9 @@ const MurderMysteryGame = () => {
         isOpen={showVoiceSettings} 
         onClose={() => setShowVoiceSettings(false)} 
       />
+      
+      {/* Splash Cursor - Only on map screen */}
+      {screen === 'map' && <SplashCursor />}
       
       <AnimatePresence mode="wait">
         {/* Settings Button (only on map screen) */}
