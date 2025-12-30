@@ -172,7 +172,7 @@ export function useGameState() {
           : [...prev.completedLevels, level];
         
         // Unlock next mystery level or debate level
-        let newUnlockedLevels = [...prev.unlockedLevels];
+        const newUnlockedLevels = [...prev.unlockedLevels];
         if (level < 3 && !prev.unlockedLevels.includes(level + 1)) {
           newUnlockedLevels.push(level + 1);
         } else if (level === 3 && !prev.unlockedLevels.includes(4)) {

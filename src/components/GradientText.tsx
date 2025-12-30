@@ -1,37 +1,17 @@
-Gradient Text
-Preview
-Code
-
-Contribute
-Install
-
-CLI
-Manual
-
-pnpm
-npm
-yarn
-bun
-npx shadcn@latest add @react-bits/GradientText-JS-CSS
-Usage
-import GradientText from './GradientText'
-
-// For a smoother animation, the gradient should start and end with the same color
-  
-<GradientText
-  colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-  animationSpeed={3}
-  showBorder={false}
-  className="custom-class"
->
-  Add a splash of color!
-</GradientText>
-code
-
-
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { motion, useMotionValue, useAnimationFrame, useTransform } from 'motion/react';
+import { motion, useMotionValue, useAnimationFrame, useTransform } from 'framer-motion';
 import './GradientText.css';
+
+interface GradientTextProps {
+  children: React.ReactNode;
+  className?: string;
+  colors?: string[];
+  animationSpeed?: number;
+  showBorder?: boolean;
+  direction?: 'horizontal' | 'vertical' | 'diagonal';
+  pauseOnHover?: boolean;
+  yoyo?: boolean;
+}
 
 export default function GradientText({
   children,
@@ -42,11 +22,11 @@ export default function GradientText({
   direction = 'horizontal',
   pauseOnHover = false,
   yoyo = true
-}) {
+}: GradientTextProps) {
   const [isPaused, setIsPaused] = useState(false);
   const progress = useMotionValue(0);
   const elapsedRef = useRef(0);
-  const lastTimeRef = useRef(null);
+  const lastTimeRef = useRef<number | null>(null);
 
   const animationDuration = animationSpeed * 1000;
 
@@ -83,7 +63,7 @@ export default function GradientText({
   useEffect(() => {
     elapsedRef.current = 0;
     progress.set(0);
-  }, [animationSpeed, yoyo]);
+  }, [animationSpeed, yoyo, progress]);
 
   const backgroundPosition = useTransform(progress, p => {
     if (direction === 'horizontal') {
@@ -112,7 +92,7 @@ export default function GradientText({
   const gradientStyle = {
     backgroundImage: `linear-gradient(${gradientAngle}, ${gradientColors})`,
     backgroundSize: direction === 'horizontal' ? '300% 100%' : direction === 'vertical' ? '100% 300%' : '300% 300%',
-    backgroundRepeat: 'repeat'
+    backgroundRepeat: 'repeat' as const
   };
 
   return (
@@ -127,59 +107,4 @@ export default function GradientText({
       </motion.div>
     </motion.div>
   );
-}
-CSS
-.animated-gradient-text {
-  position: relative;
-  margin: 0 auto;
-  display: flex;
-  max-width: fit-content;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border-radius: 1.25rem;
-  font-weight: 500;
-  backdrop-filter: blur(10px);
-  transition: box-shadow 0.5s ease-out;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.animated-gradient-text.with-border {
-  padding: 0.35rem 0.75rem;
-}
-
-.gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: inherit;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.gradient-overlay::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: inherit;
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #060010;
-  z-index: -1;
-}
-
-.text-content {
-  display: inline-block;
-  position: relative;
-  z-index: 2;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
 }

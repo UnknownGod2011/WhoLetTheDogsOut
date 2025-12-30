@@ -7,6 +7,9 @@ import { SuspectSelection } from '@/components/SuspectSelection';
 import { DebateMode } from '@/components/DebateMode';
 import { DebateCongratulation } from '@/components/DebateCongratulation';
 import SplashCursor from '@/components/SplashCursor';
+import Galaxy from '@/components/Galaxy';
+import GradientText from '@/components/GradientText';
+import DecryptedText from '@/components/DecryptedText';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -133,6 +136,37 @@ const MurderMysteryGame = () => {
     setScreen('map');
   }, []);
 
+  // Render background based on case level
+  const renderLevelBackground = (level: number) => {
+    switch (level) {
+      case 1:
+        return (
+          <div 
+            className="absolute inset-0" 
+            style={{ 
+              zIndex: 5,
+              width: '100%',
+              height: '100%'
+            }}
+          >
+            <Galaxy
+              density={0.8}
+              glowIntensity={0.4}
+              saturation={0.3}
+              hueShift={200}
+              speed={0.5}
+              mouseInteraction={true}
+              transparent={true}
+            />
+          </div>
+        );
+      case 2:
+        return null;
+      default:
+        return null;
+    }
+  };
+
   // Render different screens
   const renderScreen = () => {
     switch (screen) {
@@ -147,15 +181,20 @@ const MurderMysteryGame = () => {
 
       case 'intro':
         return session.currentCase ? (
-          <div className="min-h-screen flex flex-col items-center justify-center p-6">
+          <div className="min-h-screen flex flex-col items-center justify-center p-6 relative">
+            {/* Default background gradient (lowest layer) */}
             <div 
-              className="absolute inset-0"
+              className="absolute inset-0 z-0"
               style={{
                 background: `radial-gradient(ellipse 60% 60% at 50% 40%, 
                   hsl(270 20% 8%) 0%, 
                   hsl(240 10% 4%) 100%)`,
               }}
             />
+            
+            {/* Level-specific background (above default gradient) */}
+            {renderLevelBackground(session.currentCase.level)}
+            
             <FogOverlay intensity="medium" />
 
             <motion.button
@@ -182,12 +221,25 @@ const MurderMysteryGame = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-8 text-center"
               >
-                <h2 className="text-2xl font-bold text-white mb-2">
+                <GradientText
+                  colors={['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']}
+                  animationSpeed={4}
+                  className="text-2xl font-bold mb-2"
+                >
                   {session.currentCase.title}
-                </h2>
-                <p className="text-gray-300 mb-4">
-                  {session.currentCase.subtitle}
-                </p>
+                </GradientText>
+                <div className="text-gray-300 mb-4">
+                  <DecryptedText
+                    text={session.currentCase.subtitle}
+                    animateOn="view"
+                    sequential={true}
+                    revealDirection="center"
+                    speed={80}
+                    characters="!@#$%^&*()_+-=[]{}|;:,.<>?"
+                    className="text-gray-300"
+                    encryptedClassName="text-gray-500"
+                  />
+                </div>
                 <Badge variant="secondary" className="mb-4">
                   Level {session.currentCase.level}
                 </Badge>
@@ -271,8 +323,13 @@ const MurderMysteryGame = () => {
                       <XCircle className="h-16 w-16 text-red-400" />
                     )}
                   </div>
-                  <CardTitle className="text-2xl text-white">
-                    {session.isCorrect ? 'Case Solved!' : 'Case Unsolved'}
+                  <CardTitle className="text-2xl">
+                    <GradientText
+                      colors={session.isCorrect ? ['#10B981', '#34D399', '#6EE7B7'] : ['#EF4444', '#F87171', '#FCA5A5']}
+                      animationSpeed={3}
+                    >
+                      {session.isCorrect ? 'Case Solved!' : 'Case Unsolved'}
+                    </GradientText>
                   </CardTitle>
                 </CardHeader>
                 

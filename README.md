@@ -15,7 +15,7 @@ This project demonstrates the power of combining **ElevenLabs' conversational AI
 
 ## 🚀 Live Demo
 
-**Deployed URL**: [Coming Soon - Google Cloud App Engine]
+**Deployed URL**: https://the-whispering-orb.vercel.app
 
 **Demo Video**: [3-minute demo video on YouTube]
 

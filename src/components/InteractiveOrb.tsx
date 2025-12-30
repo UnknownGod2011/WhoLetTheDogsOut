@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Mic, MicOff, Volume2, VolumeX, Skull } from 'lucide-react';
 import { voicePipeline, type PipelineStatus, type VoiceQuestion } from '@/services/voicePipeline';
 import WebGLOrb from './WebGLOrb';
+import DecryptedText from './DecryptedText';
 import type { MurderCase } from '@/data/cases';
 
 interface InteractiveOrbProps {
@@ -181,14 +182,23 @@ export function InteractiveOrb({
 
       {/* Status Display */}
       <div className="text-center space-y-2">
-        <motion.p
+        <motion.div
           key={status.message}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="font-cinzel text-lg text-foreground"
         >
-          {status.message}
-        </motion.p>
+          <DecryptedText
+            text={status.message}
+            animateOn="view"
+            sequential={true}
+            revealDirection="center"
+            speed={60}
+            characters="!@#$%^&*()_+-=[]{}|;:,.<>?"
+            className="text-foreground"
+            encryptedClassName="text-foreground/50"
+          />
+        </motion.div>
 
         {status.questionsRemaining > 0 && storyStarted && (
           <p className="font-crimson text-sm text-muted-foreground">

@@ -29,6 +29,7 @@ import { generateDebateResponse, scoreDebateArgument } from '@/services/debateEn
 import { generateSpeech } from '@/services/elevenlabs';
 import { audioManager } from '@/services/audioManager';
 import { FogOverlay } from './FogOverlay';
+import TextType from './TextType';
 
 // Type declaration for SpeechRecognition
 declare global {
@@ -576,7 +577,19 @@ export function DebateMode({ onBack }: DebateProps) {
                             </span>
                           </div>
                           
-                          <p className="text-sm leading-relaxed font-crimson">{message.content}</p>
+                          {message.type === 'oracle' ? (
+                            <TextType
+                              text={message.content}
+                              as="p"
+                              typingSpeed={30}
+                              className="text-sm leading-relaxed font-crimson"
+                              showCursor={false}
+                              loop={false}
+                              startOnVisible={true}
+                            />
+                          ) : (
+                            <p className="text-sm leading-relaxed font-crimson">{message.content}</p>
+                          )}
                           
                           {message.score !== undefined && (
                             <div className="mt-3 pt-3 border-t border-purple-400/30">

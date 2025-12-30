@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trophy, Crown, Sparkles, Brain, Target, Zap } from 'lucide-react';
 import { FogOverlay } from './FogOverlay';
+import GradientText from './GradientText';
 
 interface DebateCongratulationProps {
   onEnterDebate: () => void;
@@ -69,8 +70,13 @@ export function DebateCongratulation({ onEnterDebate, completedLevels }: DebateC
                 </div>
               </motion.div>
 
-              <CardTitle className="text-4xl text-white mb-4 font-cinzel">
-                Congratulations, Master Detective!
+              <CardTitle className="text-4xl mb-4 font-cinzel">
+                <GradientText
+                  colors={['#FFD700', '#FFA500', '#FF6347', '#FF1493', '#8A2BE2']}
+                  animationSpeed={4}
+                >
+                  Congratulations, Master Detective!
+                </GradientText>
               </CardTitle>
               
               <p className="text-xl text-gray-300 font-crimson">

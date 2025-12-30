@@ -128,7 +128,7 @@ export async function generateSpeech(
   config: VoiceConfig = ORB_VOICE_CONFIG,
   emotion?: EmotionalVoiceSettings
 ): Promise<ArrayBuffer> {
-  const apiKey = 'sk_35f4b89938a76f00f869d0fdca66fe4a185de62aa9edae4a';
+  const apiKey = 'sk_60e2db56504a59fcaeceabf82bc3e6bbad7d9b016e524615';
   
   console.log(`[ElevenLabs] 🎵 Starting speech generation for text: "${text.substring(0, 50)}..."`);
   console.log(`[ElevenLabs] 🎵 Emotion: ${emotion?.emotion || 'none'}, Intensity: ${emotion?.intensity || 0}`);
@@ -291,7 +291,7 @@ export class ElevenLabsStreamer {
   ): Promise<void> {
     this.onAudioChunk = onAudioChunk;
     this.onComplete = onComplete;
-    const apiKey = 'sk_35f4b89938a76f00f869d0fdca66fe4a185de62aa9edae4a';
+    const apiKey = 'sk_60e2db56504a59fcaeceabf82bc3e6bbad7d9b016e524615';
     const wsUrl = `wss://api.elevenlabs.io/v1/text-to-speech/${this.voiceId}/stream-input?model_id=eleven_multilingual_v2&optimize_streaming_latency=2`;
 
     this.ws = new WebSocket(wsUrl);
@@ -382,7 +382,7 @@ export class ElevenLabsStreamer {
  * Test ElevenLabs API connection and voice availability
  */
 export async function testElevenLabsConnection(): Promise<{ success: boolean; error?: string; voices?: any[] }> {
-  const apiKey = 'sk_35f4b89938a76f00f869d0fdca66fe4a185de62aa9edae4a';
+  const apiKey = 'sk_60e2db56504a59fcaeceabf82bc3e6bbad7d9b016e524615';
   
   try {
     console.log('[ElevenLabs Test] 🧪 Testing API connection...');
@@ -513,7 +513,7 @@ export const audioCache = new AudioCache();
  * Get available voices for the voice settings UI
  */
 export async function getAvailableVoices(): Promise<Array<{ id: string; name: string }>> {
-  const apiKey = 'sk_35f4b89938a76f00f869d0fdca66fe4a185de62aa9edae4a';
+  const apiKey = 'sk_60e2db56504a59fcaeceabf82bc3e6bbad7d9b016e524615';
   
   try {
     console.log('[ElevenLabs] 🎵 Fetching available voices...');

@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
 import { FogOverlay } from './FogOverlay';
 import WebGLOrb from './WebGLOrb';
+import GradientText from './GradientText';
+import DecryptedText from './DecryptedText';
 import { MURDER_CASES } from '@/data/cases';
 
 interface LevelMapProps {
@@ -50,12 +52,25 @@ export function LevelMap({ unlockedLevels, completedLevels, onSelectLevel }: Lev
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <h1 className="font-cinzel text-4xl md:text-5xl text-foreground text-glow tracking-wider">
+        <GradientText
+          colors={['#8B5CF6', '#A78BFA', '#C4B5FD', '#DDD6FE', '#EDE9FE']}
+          animationSpeed={5}
+          className="font-cinzel text-4xl md:text-5xl tracking-wider"
+        >
           The Path of Truth
-        </h1>
-        <p className="mt-4 font-crimson text-lg text-muted-foreground italic">
-          Each shadow hides a story. Each story hides a killer.
-        </p>
+        </GradientText>
+        <div className="mt-4 font-crimson text-lg text-muted-foreground italic">
+          <DecryptedText
+            text="Each shadow hides a story. Each story hides a killer."
+            animateOn="view"
+            sequential={true}
+            revealDirection="center"
+            speed={100}
+            characters="!@#$%^&*()_+-=[]{}|;:,.<>?"
+            className="text-muted-foreground"
+            encryptedClassName="text-muted-foreground/30"
+          />
+        </div>
       </motion.div>
 
       {/* Level nodes */}
