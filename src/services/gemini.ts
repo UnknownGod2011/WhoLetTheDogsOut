@@ -85,7 +85,7 @@ export async function generateOrbResponse(
   context: CaseContext,
   gameState: GameState
 ): Promise<QuestionResponse> {
-  const apiKey = 'AIzaSyBjXIFOdJSWy1zYZDkKRF54WSHgCe_z0sQ';
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   
   // Check for forbidden questions first
   if (isForbiddenQuestion(question)) {
@@ -560,7 +560,7 @@ export async function generateRevealNarration(
   playerGuess: string,
   isCorrect: boolean
 ): Promise<{ text: string; emotion: QuestionResponse['emotion'] }> {
-  const apiKey = 'AIzaSyBjXIFOdJSWy1zYZDkKRF54WSHgCe_z0sQ';
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   
   const emotion: QuestionResponse['emotion'] = isCorrect ? 'dramatic' : 'serious';
   
@@ -626,7 +626,7 @@ Create the reveal narration:`;
  * Test Gemini API connection
  */
 export async function testGeminiConnection(): Promise<{ success: boolean; error?: string; response?: any }> {
-  const apiKey = 'AIzaSyBjXIFOdJSWy1zYZDkKRF54WSHgCe_z0sQ';
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   
   try {
     console.log('[Gemini Test] 🧪 Testing API connection...');

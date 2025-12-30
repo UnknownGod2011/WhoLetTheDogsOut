@@ -9,7 +9,7 @@
 - ✅ **Performance**: 799ms latency (excellent)
 
 ### **What Changed**:
-- 🔄 **Updated API Key**: `sk_35f4b89938a76f00f869d0fdca66fe4a185de62aa9edae4a`
+- 🔄 **Updated API Key**: `[SECURE - Set via environment variables]`
 - ✅ **All 4 instances updated** in the ElevenLabs service
 - ✅ **Tested with typical app response** (252 characters)
 

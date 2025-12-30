@@ -73,7 +73,7 @@ Look for these success indicators:
 ```
 
 ## API Keys Used
-- Gemini: `AIzaSyBjXIFOdJSWy1zYZDkKRF54WSHgCe_z0sQ`
-- ElevenLabs: `sk_6e8b86dda4bccdb13ec004953383b48e86d7a7f852efaf8a`
+- Gemini: `[SECURE - Set via environment variables]`
+- ElevenLabs: `[SECURE - Set via environment variables]`
 
 Both APIs should now work reliably with proper authentication and stable model versions.

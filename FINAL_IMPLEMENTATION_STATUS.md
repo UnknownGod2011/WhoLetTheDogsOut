@@ -29,7 +29,7 @@
 - **Implementation**: Enhanced TTS with detailed logging and error handling
 - **File**: `src/services/elevenlabs.ts` (complete service)
 - **Details**:
-  - Working API key: `sk_35f4b89938a76f00f869d0fdca66fe4a185de62aa9edae4a`
+  - Working API key: `[SECURE - Set via environment variables]`
   - Fallback voice IDs for reliability
   - Emotional voice synthesis with mystical tone
   - Comprehensive error handling and logging

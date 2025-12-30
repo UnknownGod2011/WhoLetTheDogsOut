@@ -36,7 +36,7 @@ export async function generateDebateResponse(
   userArgument: string,
   previousMessages: DebateMessage[]
 ): Promise<DebateResponse> {
-  const apiKey = 'AIzaSyBjXIFOdJSWy1zYZDkKRF54WSHgCe_z0sQ';
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   
   try {
     // Build conversation context
@@ -140,7 +140,7 @@ export async function scoreDebateArgument(
   topic: string,
   turnNumber: number
 ): Promise<ArgumentScore> {
-  const apiKey = 'AIzaSyBjXIFOdJSWy1zYZDkKRF54WSHgCe_z0sQ';
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   
   try {
     const systemPrompt = `You are an expert debate judge. Score arguments on a scale of 0-5 for each category:
