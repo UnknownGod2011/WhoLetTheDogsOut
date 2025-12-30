@@ -103,7 +103,9 @@ export async function generateOrbResponse(
   
   console.log('[Gemini] 🚀 ATTEMPTING REAL GEMINI API CALL');
   console.log('[Gemini] Question:', question);
-  console.log('[Gemini] API Key (first 10 chars):', apiKey.substring(0, 10) + '...');
+  console.log('[Gemini] API Key (first 10 chars):', apiKey?.substring(0, 10) + '...');
+  console.log('[Gemini] API Key (last 4 chars): ...' + apiKey?.substring(apiKey.length - 4));
+  console.log('[Gemini] Full API Key length:', apiKey?.length);
   console.log('[Gemini] Emotion determined:', emotion);
   
   // Add a flag to track if we reach the API call
