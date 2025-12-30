@@ -6,6 +6,7 @@ import { Mic, MicOff, Volume2, VolumeX, Skull } from 'lucide-react';
 import { voicePipeline, type PipelineStatus, type VoiceQuestion } from '@/services/voicePipeline';
 import { testGeminiConnection } from '@/services/gemini';
 import { testElevenLabsConnection } from '@/services/elevenlabs';
+import WebGLOrb from './WebGLOrb';
 import type { MurderCase } from '@/data/cases';
 
 interface InteractiveOrbProps {
@@ -131,22 +132,26 @@ export function InteractiveOrb({
 
   const getOrbSize = () => {
     switch (size) {
-      case 'small': return 'w-16 h-16';
-      case 'medium': return 'w-32 h-32';
-      case 'large': return 'w-48 h-48';
-      default: return 'w-48 h-48';
+      case 'small': return { width: '120px', height: '120px' };
+      case 'medium': return { width: '200px', height: '200px' };
+      case 'large': return { width: '300px', height: '300px' };
+      default: return { width: '300px', height: '300px' };
     }
   };
 
-  const getOrbGlow = () => {
+  const getOrbHue = () => {
     switch (status.state) {
-      case 'narrating': return 'shadow-[0_0_50px_#8B5CF6]';
-      case 'listening': return 'shadow-[0_0_50px_#10B981]';
-      case 'processing': return 'shadow-[0_0_50px_#F59E0B]';
-      case 'speaking': return 'shadow-[0_0_50px_#EF4444]';
-      case 'complete': return 'shadow-[0_0_30px_#6B7280]';
-      default: return 'shadow-[0_0_30px_#8B5CF6]';
+      case 'narrating': return 270; // Purple
+      case 'listening': return 120; // Green
+      case 'processing': return 60; // Yellow
+      case 'speaking': return 240; // Blue-purple
+      case 'complete': return 300; // Magenta
+      default: return 270; // Default purple
     }
+  };
+
+  const getHoverIntensity = () => {
+    return status.isSpeaking ? 0.6 : 0.3;
   };
 
   const isClickable = !storyStarted || (status.state === 'idle' && status.questionsRemaining > 0);
@@ -154,46 +159,50 @@ export function InteractiveOrb({
 
   return (
     <div className="flex flex-col items-center space-y-6">
-      {/* Main Orb */}
-      <div className="relative">
-        <motion.div
-          className={`${getOrbSize()} rounded-full bg-gradient-to-br from-purple-400 via-purple-600 to-purple-800 ${getOrbGlow()} cursor-pointer relative overflow-hidden`}
+      {/* Main WebGL Orb */}
+      <motion.div 
+        className="relative" 
+        style={getOrbSize()}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 100, 
+          damping: 15,
+          duration: 1.2 
+        }}
+      >
+        <WebGLOrb
+          hue={getOrbHue()}
+          hoverIntensity={getHoverIntensity()}
+          rotateOnHover={true}
+          forceHoverState={status.isSpeaking || status.isListening}
+          backgroundColor="rgba(0, 0, 0, 0)"
           onClick={handleOrbClick}
-          animate={{
-            scale: status.isSpeaking ? [1, 1.05, 1] : 1,
-            rotate: status.state === 'processing' ? 360 : 0,
+          style={{
+            width: '100%',
+            height: '100%',
+            cursor: isClickable ? 'pointer' : 'default',
           }}
-          transition={{
-            scale: { duration: 2, repeat: status.isSpeaking ? Infinity : 0 },
-            rotate: { duration: 2, repeat: status.state === 'processing' ? Infinity : 0, ease: "linear" }
-          }}
-          whileHover={isClickable ? { scale: 1.05 } : {}}
-          whileTap={isClickable ? { scale: 0.95 } : {}}
-        >
-          {/* Inner glow effect */}
-          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
-          
-          {/* Pulsing center */}
-          <motion.div
-            className="absolute inset-1/4 rounded-full bg-white/30"
-            animate={{
-              opacity: status.isSpeaking ? [0.3, 0.8, 0.3] : 0.3,
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: status.isSpeaking ? Infinity : 0,
-            }}
-          />
+        />
 
-          {/* Listening indicator */}
-          {status.isListening && (
-            <motion.div
-              className="absolute inset-0 rounded-full border-4 border-green-400"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1, repeat: Infinity }}
-            />
-          )}
-        </motion.div>
+        {/* Listening indicator overlay */}
+        {status.isListening && (
+          <motion.div
+            className="absolute inset-0 rounded-full border-4 border-green-400 pointer-events-none"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1, repeat: Infinity }}
+          />
+        )}
+
+        {/* Processing indicator overlay */}
+        {status.state === 'processing' && (
+          <motion.div
+            className="absolute inset-0 rounded-full border-4 border-yellow-400 pointer-events-none"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          />
+        )}
 
         {/* Voice support indicator */}
         {!isVoiceSupported && (
@@ -201,7 +210,7 @@ export function InteractiveOrb({
             <VolumeX className="w-3 h-3 text-white" />
           </div>
         )}
-      </div>
+      </motion.div>
 
       {/* Status Display */}
       <div className="text-center space-y-2">

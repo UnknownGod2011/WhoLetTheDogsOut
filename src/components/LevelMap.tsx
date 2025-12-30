@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Lock } from 'lucide-react';
 import { FogOverlay } from './FogOverlay';
+import WebGLOrb from './WebGLOrb';
 import { MURDER_CASES } from '@/data/cases';
 
 interface LevelMapProps {
@@ -149,31 +150,37 @@ export function LevelMap({ unlockedLevels, completedLevels, onSelectLevel }: Lev
                   </div>
                 )}
 
-                {/* Node circle */}
-                <div
-                  className={`
-                    relative z-10 w-16 h-16 rounded-full
-                    flex items-center justify-center
-                    border-2 transition-all duration-300
-                    ${isUnlocked
-                      ? isCompleted
-                        ? 'border-accent bg-accent/20'
-                        : level.type === 'debate'
-                        ? 'border-purple-500 bg-purple-500/20 group-hover:bg-purple-500/30'
-                        : 'border-primary bg-primary/20 group-hover:bg-primary/30'
-                      : 'border-muted/30 bg-muted/10'}
-                  `}
-                >
+                {/* Node circle - WebGL Orb */}
+                <div className="relative z-10 w-16 h-16">
                   {isUnlocked ? (
-                    level.type === 'debate' ? (
-                      <span className="text-2xl">🧠</span>
-                    ) : (
-                      <span className={`font-cinzel text-2xl ${isCompleted ? 'text-accent' : 'text-primary-foreground'}`}>
-                        {level.level}
-                      </span>
-                    )
+                    <WebGLOrb
+                      hue={level.type === 'debate' ? 270 : isCompleted ? 45 : 200}
+                      hoverIntensity={0.4}
+                      rotateOnHover={true}
+                      forceHoverState={false}
+                      backgroundColor="rgba(0, 0, 0, 0)"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                      }}
+                    />
                   ) : (
-                    <Lock className="w-6 h-6 text-muted-foreground/50" />
+                    <div className="w-full h-full rounded-full border-2 border-muted/30 bg-muted/10 flex items-center justify-center">
+                      <Lock className="w-6 h-6 text-muted-foreground/50" />
+                    </div>
+                  )}
+                  
+                  {/* Level number/icon overlay */}
+                  {isUnlocked && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      {level.type === 'debate' ? (
+                        <span className="text-2xl drop-shadow-lg">🧠</span>
+                      ) : (
+                        <span className={`font-cinzel text-xl font-bold drop-shadow-lg ${isCompleted ? 'text-yellow-300' : 'text-white'}`}>
+                          {level.level}
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
               </motion.button>
